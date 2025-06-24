@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>{{.Title}} - テクテク動画(β)</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="/static/css/orPlyrStyle.css">
+    <link rel="stylesheet" href="/static/css/commentsCanvas.css">
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
+</head>
+<body>
+    <header>
+        <a href="/"><img src="/static/images/tecutecudouga.png" alt="テクテク動画(β)" class="header-logo"></a>
+        <nav>
+            <a href="/upload">動画をアップロード</a>
+        </nav>
+    </header>
+
+    <main class="container">
+        <h2>{{.Title}}</h2>
+        <div class="custom-video-player" data-video-src="{{.VideoFilePath.String}}">
+            <div id="video-plyr-container">
+                <video class="tecuvideo-player-design" id="tecuvideo-player"></video>
+                <canvas id="comments-canvas" width=1920px height=1080px></canvas>
+            </div>
+            <div class="custom-controls">
+                <button id="play-pause-btn">
+                    <img class="play-btn" id="play-btn">
+                </button>
+                <div class="seek-bar-container">
+                    <div class="seek-track"></div>
+                    <div id="seek-progress" class="seek-progress"></div>
+                    <input type="range" id="seek-bar" value="0" step="0.1">
+                </div>
+                <span id="current-time">00:00</span><span class="duration-decoration"> / </span><span id="duration">00:00</span>
+                <button id="mute-btn">
+                    <img class="volume-icon" id="volume-icon">
+                </button>
+                <input type="range" id="volume-bar" min="0" max="1" step="0.01" value="1">
+                <div class="quality-menu">
+                    <button id="quality-btn">
+                        <img src="/static/system-images/setting.svg" class="quality-icon">
+                    </button>
+                    <div id="quality-lists" class="hidden">
+                    </div>
+                </div>
+                <button id="fullscreen-btn">
+                    <img src="/static/system-images/fullScr.svg" id="fullScr-icon" class="fullScr-icon">
+                </button>
+            </div>
+        </div>
+
+        <div class="video-info">
+            <h3>動画説明</h3>
+            <p>{{.Description.String | printf "%s"}}</p>
+        </div>
+
+        <div class="comment-container">
+            <h3>コメント</h3>
+            </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 テクテク動画(β)</p>
+    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+    <script src="/static/js/comments.js" defar></script>
+    <script src="/static/js/tecuvideo-plyr.js" defer></script>
+</body>
+</html>

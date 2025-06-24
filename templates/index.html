@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>テクテク動画(β)</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <meta name="tecuVideoPlayer">
+</head>
+<body>
+    <header>
+        <a href="/"><img src="/static/images/tecutecudouga.png" alt="テクテク動画(β)" class="header-logo"></a>
+        <nav>
+            <a href="/upload">動画をアップロード</a>
+        </nav>
+    </header>
+
+    <main class="container">
+        <h2>新着動画</h2>
+        <div class="video-list">
+            {{range .}}
+            <div class="video-item">
+                <a href="/watch/{{.DisplayID}}">
+                    <img src="{{.ThumbnailPath.String}}" alt="{{.Title}}">
+                    <p>{{.Title}}</p>
+                </a>
+            </div>
+            {{else}}
+            <p>まだ動画がありません。</p>
+            {{end}}
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 テクテク動画(β)</p>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,128 @@
+/* グローバルスタイル */
+body {
+    background-color: #f0f0f0;
+    font-family: "MS PGothic", "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", Osaka, sans-serif;
+    margin: 0;
+    padding: 0;
+    color: #333;
+}
+
+.container {
+    max-width: 960px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+}
+
+a {
+    color: #0000ee;
+    text-decoration: none;
+}
+a:hover {
+    text-decoration: underline;
+}
+
+/* ヘッダー */
+header {
+    background-color: #333;
+    padding: 10px 20px;
+    border-bottom: 3px solid #666;
+}
+header h1 {
+    margin: 0;
+    color: #fff;
+    font-size: 24px;
+}
+.header-link, .header-link:hover {
+    color: #fff;
+    text-decoration: none;
+}
+
+/* フッター */
+footer {
+    text-align: center;
+    margin-top: 20px;
+    padding: 10px;
+    font-size: 12px;
+    color: #666;
+}
+
+/* 動画一覧ページ */
+.video-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+.video-item {
+    width: 220px;
+    border: 1px solid #ddd;
+    padding: 10px;
+    background-color: #fafafa;
+}
+.video-item img {
+    width: 100%;
+    height: auto;
+    border: 1px solid #ccc;
+}
+.video-item p {
+    margin: 10px 0 0;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+/* 動画視聴ページ */
+.video-player-container {
+    background-color: #000;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+.video-player-container video {
+    width: 100%;
+    height: auto;
+}
+
+.video-info {
+    margin-bottom: 20px;
+}
+
+.video-info h3 {
+    border-bottom: 2px solid #ccc;
+    padding-bottom: 5px;
+}
+.video-info p {
+    white-space: pre-wrap; /* 改行を反映させる */
+}
+
+
+.comment-container {
+    margin-top: 20px;
+}
+.comment-display {
+    border: 1px solid #ccc;
+    height: 200px;
+    padding: 10px;
+    margin-bottom: 10px;
+    overflow-y: scroll;
+    background-color: #fff;
+}
+.comment {
+    padding: 2px 5px;
+    margin-bottom: 5px;
+}
+.comment-form input {
+    width: calc(100% - 100px);
+    padding: 8px;
+    border: 1px solid #ccc;
+}
+.comment-form button {
+    width: 90px;
+    padding: 8px;
+    border: 1px solid #999;
+    background-color: #eee;
+    cursor: pointer;
+}
+
+.header-logo{
+    max-width: 200px;
+}

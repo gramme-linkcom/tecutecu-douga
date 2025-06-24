@@ -1,0 +1,12 @@
+/docker-compose.yml
+/docker-compose.override.yml
+/.env
+/Dockerfile.dev.webapp
+/Dockerfile.webapp
+/Dockerfile.worker
+/go.mod
+/go.sum
+/temp
+/static/thumbnails
+/static/streams
+/static/temp

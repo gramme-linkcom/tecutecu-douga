@@ -1,0 +1,267 @@
+/* =================================== */
+/* Plyrプレイヤーのカスタムデザイン      */
+/* =================================== */
+:root {
+  /* --- 以前のカスタム設定 (必要に応じて残す) --- */
+  --plyr-video-background: #000000;
+  --plyr-control-background: rgba(0, 0, 0, 0.7);
+  --plyr-control-color: #ffffff;
+  --plyr-control-color-hover: #ffffff;
+  
+  /* --- ▼▼▼ シークバーの色のカスタム ▼▼▼ --- */
+
+  /* 1. 再生済みの部分の色 (これがプレイヤーのメインカラーになります) */
+  --plyr-color-main: #34a8eb; /* 例: 明るい青色 */
+
+  /* 2. まだ再生されていない部分（バーの背景）の色 */
+  --plyr-range-track-background: rgba(70, 70, 70, 0.5); /* 例: 少し濃いめの半透明グレー */
+  
+  /* 3. (オプション) つまみの色を個別に変えたい場合 */
+  /* この指定がない場合、つまみは--plyr-color-mainと同じ色になります */
+  /* --plyr-range-thumb-background: #ff0000; */ /* 例: 赤色にしたい場合 */
+}
+
+.tecuvideo-player-design{
+  width: 100%;
+}
+
+#current-time, #duration, .duration-decoration{
+  color: white;
+}
+
+.custom-video-player{
+  position: relative; /* 子要素を絶対配置するための基準点にする */
+  overflow: hidden; /* はみ出した部分を隠す */
+}
+
+.custom-video-player video {
+  width: 100%;
+}
+
+.tecuvideo-player-design, .video-plyr-container{
+  background-color: #000;
+  aspect-ratio: 16 / 9;
+}
+
+/* video要素自体 */
+.tecuvideo-player-design video {
+  width: 100%;
+  height: 100%; /* コンテナいっぱいに広がるように設定 */
+  display: block;
+
+  /* ▼▼▼ この一行で動画を枠内にアスペクト比を保ったまま収める ▼▼▼ */
+  object-fit: contain;
+}
+
+.custom-video-player:fullscreen #video-plyr-container {
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+}
+/* コントロールバー */
+.custom-controls {
+  /* ▼▼▼ ここからがオーバーレイ表示の核となる設定 ▼▼▼ */
+  position: absolute; /* 親コンテナを基準に絶対配置 */
+  bottom: 0;          /* 親コンテナの真下に配置 */
+  left: 0;
+  right: 0;
+
+  /* 以下はデザインの調整 */
+  display: flex;
+  align-items: center;
+  gap: 15px; /* 各ボタンの間隔 */
+  padding: 10px;
+  /* 下から上への黒いグラデーションで見やすくする */
+  background: linear-gradient(to top, rgb(0, 0, 0), transparent);
+
+  opacity: 0; /* 最初は透明で見えないようにする */
+  transition: opacity 0.3s ease-in-out; /* じわっと表示するためのアニメーション */
+  pointer-events: none; /* 透明な間はクリックできないようにする */
+}
+
+/* プレイヤーコンテナにマウスが乗った時だけ、コントロールバーを表示 */
+.custom-video-player:hover .custom-controls {
+  opacity: 1; /* 不透明にして表示する */
+  pointer-events: auto; /* クリックできるようにする */
+}
+
+.custom-controls button {
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+  padding: 5px;
+}
+.custom-controls input[type="range"] {
+  cursor: pointer;
+  background: white;
+}
+
+.seek-bar-container {
+  position: relative;
+  width: 100%;
+  height: 5px;
+  display: flex;
+  align-items: center;
+  margin: 0 10px;
+  cursor: pointer;
+  /* 背景のバーのスタイルをここに設定 */
+  background-color: rgba(255, 255, 255, 0.3);
+  border-radius: 2px;
+}
+
+/* 再生済みを示す青色のバー（div） */
+.seek-progress {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 0%; /* 初期値は0% */
+  height: 100%;
+  background-image: linear-gradient(90deg, rgba(103, 126, 250, 1), rgba(165, 100, 241, 0.86) 93%, rgba(84, 94, 219, 1));
+  border-radius: 2px;
+  pointer-events: none; /* クリックを下の要素に透過させる */
+}
+
+/* 実際に操作する、目に見えないスライダー本体 */
+#seek-bar {
+  -webkit-appearance: none;
+  appearance: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  margin: 0;
+  cursor: pointer;
+}
+
+/* スライダーのつまみ */
+#seek-bar::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  background: white;
+  border-radius: 50%;
+}
+#seek-bar::-moz-range-thumb {
+  width: 16px;
+  height: 16px;
+  background: white;
+  border-radius: 50%;
+  border: none;
+}
+
+.volume-icon{
+  color: white;
+  width: 25px;
+}
+
+.play-btn{
+  width: 20px;
+}
+
+
+/* メニュー全体を包むコンテナ */
+.quality-menu-container {
+  position: relative; /* 中のメニュー(#quality-lists)を絶対配置するための基準点 */
+}
+
+/* 画質リストのコンテナ（ポップアップメニュー本体） */
+#quality-lists {
+  position: absolute;           /* 親コンテナを基準に絶対配置 */
+  bottom: 100%;               /* 親コンテナ(画質ボタン)の真上に配置 */                  /* 親コンテナの中央を基準にする */
+  transform: translateX(-50%); /* 中央揃えのズレを補正 */
+  
+  background-color: rgba(40, 40, 40, 0.9);
+  border-radius: 4px;
+  margin-bottom: 10px;        /* ボタンとの間に少し隙間を空ける */
+  padding: 5px;
+  display: flex;
+  flex-direction: column;     /* ボタンを縦に並べる */
+}
+
+/* メニュー内の各画質ボタン */
+#quality-lists button {
+  background: none;
+  border: none;
+  color: white;
+  padding: 8px 20px;
+  cursor: pointer;
+  text-align: center;
+  width: 100%;
+  font-size: 14px;
+  border-radius: 3px;
+}
+
+#quality-lists button:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* メニューを非表示にするためのクラス */
+.hidden {
+  display: none !important; /* 他のスタイルに負けないように!importantを追加 */
+}
+
+.quality-icon{
+  width: 20px;
+}
+
+/* 音量バー(<input type="range">)の基本スタイル */
+#volume-bar {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100px; /* 音量バーの長さを指定 */
+  height: 16px; /* クリック領域の高さ */
+  background: transparent; /* 元々のバーの背景は透明にする */
+  cursor: pointer;
+}
+
+/* 音量バーのレール（トラック）部分 */
+#volume-bar::-webkit-slider-runnable-track {
+  width: 100%;
+  height: 4px;
+  border-radius: 2px;
+  /* CSS変数を使ったグラデーションで、JSから制御しやすくする */
+  background: linear-gradient(to right, 
+    white var(--volume-progress, 100%),          /* 音量部分の色 */
+    rgba(255, 255, 255, 0.3) var(--volume-progress, 100%) /* 背景部分の色 */
+  );
+}
+#volume-bar::-moz-range-track {
+  width: 100%;
+  height: 4px;
+  border-radius: 2px;
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* 音量バーのつまみ */
+#volume-bar::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 12px;
+  height: 12px;
+  background: white;
+  border-radius: 50%;
+  margin-top: -4px; /* バーの中央に配置 */
+  border: none;
+}
+#volume-bar::-moz-range-thumb {
+  width: 12px;
+  height: 12px;
+  background: white;
+  border-radius: 50%;
+  border: none;
+}
+
+/* Firefox用の音量部分 */
+#volume-bar::-moz-range-progress {
+    background-color: white;
+    height: 4px;
+    border-radius: 2px;
+}
+
+.fullScr-icon{
+  width: 20px;
+}

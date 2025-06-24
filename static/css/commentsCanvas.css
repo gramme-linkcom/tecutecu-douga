@@ -1,0 +1,14 @@
+/* reset */
+* {
+    margin: 0;
+    padding: 0;
+}
+
+#comments-canvas {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    background: #eeeeee00;
+    width: 100%;
+    height: 100%;
+}

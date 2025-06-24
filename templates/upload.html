@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>動画をアップロード - テクテク動画(β)</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <header>
+        <a href="/"><img src="/static/images/tecutecudouga.png" alt="テクテク動画(β)" class="header-logo"></a>
+        <nav>
+            <a href="/">動画一覧へ戻る</a>
+        </nav>
+    </header>
+
+    <main class="container">
+        <h2>動画をアップロード</h2>
+
+        {{if .Message}}
+        <p class="message {{.Status}}">{{.Message}}</p>
+        {{end}}
+
+        <form action="/upload" method="post" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="title">動画タイトル</label>
+                <input type="text" id="title" name="title" required>
+            </div>
+            <div class="form-group">
+                <label for="description">動画説明</label>
+                <textarea id="description" name="description" rows="5" style="white-space: pre-wrap;"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="video">動画ファイル (MP4のみ)</label>
+                <input type="file" id="video" name="video" required accept="video/mp4">
+            </div>
+            <button type="submit">アップロードする</button>
+        </form>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 テクテク動画(β)</p>
+    </footer>
+</body>
+</html>
