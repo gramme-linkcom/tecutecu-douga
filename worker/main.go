@@ -23,7 +23,7 @@ var ctx = context.Background()
 
 const redisJobQueue = "encoding_jobs"
 
-// --- 構造体定義 (main.goと全く同じ定義) ---
+// --- 構造体定義  ---
 type Video struct {
 	UUID          string         `db:"uuid"`
 	DisplayID     string         `db:"display_id"`
