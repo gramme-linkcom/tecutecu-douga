@@ -1,0 +1,87 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:15-alpine
+    container_name: tecuteku-postgres
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis:7-alpine
+    container_name: tecutecu-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data:/data
+
+  webapp:
+    build:
+      context: .
+      dockerfile: Dockerfile.webapp
+    container_name: tecutecu-webapp
+    ports:
+      - "80:80"
+    volumes:
+      - ./static:/app/static
+      - ./templates:/app/templates
+    environment:
+      - REDIS_ADDR=redis:6379
+      - DB_HOST=db
+      - DB_PORT=5432
+      - DB_USER=${POSTGRES_USER}
+      - DB_PASSWORD=${POSTGRES_PASSWORD}
+      - DB_NAME=${POSTGRES_DB}
+    depends_on:
+      redis:
+        condition: service_started
+      db:
+        condition: service_healthy
+    networks:
+      - default # 他のサービス(db, redis)と通信するための内部ネットワーク
+
+  worker:
+    build:
+      context: .
+      dockerfile: Dockerfile.worker
+    container_name: tecutecu-worker
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+    volumes:
+      - ./static:/app/static
+      - ./info:/app/info
+      - ./temp:/app/temp # 一時ファイル用
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=all
+      - NVIDIA_DRIVER_CAPABILITIES=all
+      - REDIS_ADDR=redis:6379
+      - DB_HOST=db
+      - DB_PORT=5432
+      - DB_USER=${POSTGRES_USER}
+      - DB_PASSWORD=${POSTGRES_PASSWORD}
+      - DB_NAME=${POSTGRES_DB}
+    depends_on:
+      redis:
+        condition: service_started
+      db:
+        condition: service_healthy
+
+volumes:
+  postgres-data:
+  redis-data:

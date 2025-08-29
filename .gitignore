@@ -1,4 +1,3 @@
-/docker-compose.yml
 /docker-compose.override.yml
 /.env
 /Dockerfile.dev.webapp
